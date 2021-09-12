@@ -1,0 +1,15 @@
+#How to install ssh_server on windows
+Add-WindowsCapability -Online -Name OpenSSH.Server*
+Or using DISM:
+dism /Online /Add-Capability /CapabilityName:OpenSSH.Server~~~~0.0.1.0
+If you want to make sure that the OpenSSH server is installed, run the following PS command:
+Get-WindowsCapability -Online | ? Name -like 'OpenSSH.Server*'
+
+Get-Service -Name *ssh*
+#check the service
+Start-Service sshd
+Set-Service -Name sshd -StartupType 'Automatic'
+Set-Service -Name ‘ssh-agent’ -StartupType 'Automatic'
+Start-Service ‘ssh-agent’
+#check again
+Get-Service -Name *ssh*
